@@ -8,7 +8,7 @@ import java.util.List;
 
 public class Converter {
 
-	private final static List<Character> hexArray = Arrays.asList('0','1','2','3','4','5','6','7','8','9','A','B','C','D','E','F');
+	private final static List<Character> HEX_ARRAY = Arrays.asList('0','1','2','3','4','5','6','7','8','9','A','B','C','D','E','F');
 	
 	/**
 	 * Convert a byte array to an hexadecimal string equivalent
@@ -19,8 +19,8 @@ public class Converter {
 	    char[] hexChars = new char[bytes.length * 2];
 	    for ( int j = 0; j < bytes.length; j++ ) {
 	        int v = bytes[j] & 0xFF;
-	        hexChars[j * 2] = hexArray.get(v >>> 4);
-	        hexChars[j * 2 + 1] = hexArray.get(v & 0x0F);
+	        hexChars[j * 2] = HEX_ARRAY.get(v >>> 4);
+	        hexChars[j * 2 + 1] = HEX_ARRAY.get(v & 0x0F);
 	    }
 	    return new String(hexChars);
 	}
@@ -38,7 +38,7 @@ public class Converter {
 			throw new IllegalArgumentException("One of the byte is not complete.");
 		
 		for(Character character : s.toCharArray()) {
-			if(!hexArray.contains(character))
+			if(!HEX_ARRAY.contains(character))
 				throw new IllegalArgumentException(character+" Is not valid");
 		}
 		
@@ -98,7 +98,7 @@ public class Converter {
 		int rem = 0;
 	    while(r.compareTo(BigInteger.ZERO) == 1){
 	    	rem= r.mod(new BigInteger("16")).intValue(); 
-	        hex=hexArray.get(rem)+hex; 
+	        hex=HEX_ARRAY.get(rem)+hex; 
 	        r=r.divide(new BigInteger("16"));
 	    }
 	    return hex;

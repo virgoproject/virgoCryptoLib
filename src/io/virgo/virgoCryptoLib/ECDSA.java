@@ -13,23 +13,23 @@ import org.bouncycastle.crypto.params.ECPrivateKeyParameters;
 import org.bouncycastle.crypto.params.ECPublicKeyParameters;
 import org.bouncycastle.crypto.digests.SHA256Digest;
 
-/*
- * Copyright (c) 2018 Virgo.
- * Copyright (c) 2000 - 2011 The Legion Of The Bouncy Castle (http://www.bouncycastle.org)
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *    http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 
+/**
+ * Utility to sign and verify hashes with ECDSA secp256k1
+ * Also contains functions to generate private keys and derivate public keys from them
+ * 
+ * <p>
+ * To sign and verify:<br><br>
+ * {@code ECDSA signer = new ECDSA();}<br>
+ * {@code ECDSASignature signature = signer.Sign(hash, privateKey);}<br>
+ * {@code boolean isPublicKeyMatching = signer.Verify(hash, signature, publicKey)}
+ * </p>
+ * <p>
+ * To generate a privateKey and derivate publicKey from it:<br><br>
+ * {@code byte[] privateKey = ECDSA.generatePrivateKey();}<br>
+ * {@code byte[] publicKey = ECDSA.getPublicKey(privateKey);}
+ * </p>
+ */
 public class ECDSA {
 
 	ECDomainParameters DOMAIN;
@@ -42,7 +42,14 @@ public class ECDSA {
 		DOMAIN = new ECDomainParameters(curve.getCurve(), curve.getG(), curve.getN());
 	}
 	
-	
+	/**
+	 * Signs a hash with given private key using ECDSA secp256k1
+	 * 
+	 * @param hash The hash to sign, typically the Sha256 hash of a message
+	 * @param privateKey The private key to sign with
+	 * 
+	 * @return An object representing the resulting signature
+	 */
 	public ECDSASignature Sign(Sha256Hash hash, byte[] privateKey) {
 		
 		BigInteger privateKey_integer = new BigInteger(1,privateKey);
@@ -56,6 +63,15 @@ public class ECDSA {
 		return new ECDSASignature(components[0],components[1]);
 	}
 	
+	/**
+	 * Check if a signature corresponds to given hash and public key
+	 * 
+	 * @param hash The sha256Hash of the original message
+	 * @param signature The signature to check
+	 * @param publicKey The public key derivated from the privateKey used to generate the signature
+	 * 
+	 * @return true if everything corresponds, false otherwise
+	 */
 	public boolean Verify(Sha256Hash hash, ECDSASignature signature, byte[] publicKey) {
 		ECPublicKeyParameters publicKey_parameters = new ECPublicKeyParameters(DOMAIN.getCurve().decodePoint(publicKey), DOMAIN);
 		
@@ -71,7 +87,12 @@ public class ECDSA {
         
 	}
 	
-	
+	/**
+	 * Derivates a publicKey from a given private key
+	 * 
+	 * @param privateKey the private key to derivate from
+	 * @return The resulting public key
+	 */
 	public static byte[] getPublicKey(byte[] privateKey) {
 		  try {
 		    ECNamedCurveParameterSpec spec = ECNamedCurveTable.getParameterSpec("secp256k1");
@@ -82,7 +103,7 @@ public class ECDSA {
 	}
 	
 	/**
-	 * Randomly generate a new valid private key
+	 * Randomly generate a new valid secp256k1 private key
 	 * 
 	 * @return the generated private key
 	 */

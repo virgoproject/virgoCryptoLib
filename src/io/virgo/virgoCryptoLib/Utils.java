@@ -5,11 +5,11 @@ import io.virgo.virgoCryptoLib.Exceptions.Base58FormatException;
 public class Utils {
 
 	/**
-	 * Check if given hash is a valid address for given prefix
+	 * Check if given String is a valid address for given prefix
 	 * 
-	 * @param hash
-	 * @param prefix
-	 * @return
+	 * @param hash The address to check
+	 * @param prefix The prefix to match against
+	 * @return true if address is valid, false otherwise
 	 */
 	public static boolean validateAddress(String hash, byte[] prefix) {
 		try {
@@ -22,13 +22,21 @@ public class Utils {
 		}
 	}
 	
-	public static boolean byteArrayStartsWith(byte[] source, int offset, byte[] match) {
+	/**
+	 * Check if a bytes array starts with a given set of bytes
+	 * 
+	 * @param source The byte array to check from
+	 * @param offset The number of bytes to skip before starting comparing
+	 * @param desiredStart The byte array that must match with the start of source
+	 * @return true if source byte array starts with desired one
+	 */
+	public static boolean byteArrayStartsWith(byte[] source, int offset, byte[] desiredStart) {
 
-		if(match.length > (source.length - offset))
+		if(desiredStart.length > (source.length - offset))
 			return false;
 
-		for(int i = 0; i < match.length; i++)
-	    	if(source[offset + i] != match[i])
+		for(int i = 0; i < desiredStart.length; i++)
+	    	if(source[offset + i] != desiredStart[i])
 	    		return false;
 	    
 		return true;

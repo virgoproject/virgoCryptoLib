@@ -19,7 +19,9 @@ import java.util.Arrays;
  * limitations under the License.
  */
 
-//Store the R and S components of an ECDSA signature under one object
+/**
+ * Stores the R and S components of an ECDSA signature under one object
+ */
 public class ECDSASignature {
 	
 	
@@ -32,25 +34,43 @@ public class ECDSASignature {
 		this.S = S;
 	}
 	
-	
+	/**
+	 * @return The R component of the ECDSA signature
+	 */
 	public BigInteger getR() {
 		return R;
 	}
 	
-	
+	/**
+	 * @return The S component of the ECDSA signature
+	 */
 	public BigInteger getS() {
 		return S;
 	}
 	
+	/**
+	 * @return A String of the hexadecimal representation of the signature
+	 */
 	public String toHexString() {
 		return Converter.bytesToHex(toByteArray());
 	}
 	
+	/**
+	 * Creates an ECDSASignature object from an hexadecimal representation
+	 * 
+	 * @param hexString A String of the hexadecimal representation of the signature
+	 * @return The equivalent ECDSASignature object
+	 * @throws IllegalArgumentException If the hexadecimal representation is invalid
+	 */
 	public static ECDSASignature fromHexString(String hexString) throws IllegalArgumentException {
 		byte[] byteFormat = Converter.hexToBytes(hexString);
 		return fromByteArray(byteFormat);
 	}
 	
+	/**
+	 * @return A byte array representing the signature, first 33 bytes represents the R component,
+	 * the 33 last the S one
+	 */
 	public byte[] toByteArray() {
 		byte[] rByte = new byte[33];
 		System.arraycopy(R.toByteArray(), 0, rByte, 33-R.toByteArray().length, R.toByteArray().length);
@@ -60,6 +80,12 @@ public class ECDSASignature {
 		return Converter.concatByteArrays(rByte, sByte);
 	}
 	
+	/**
+	 * Creates an ECDSASignature object from a byte array representation
+	 * @param array The array representing the signature
+	 * @return The equivalent ECDSASignature object
+	 * @throws IllegalArgumentException If the given byte array represents an invalid signature
+	 */
 	public static ECDSASignature fromByteArray(byte[] array) throws IllegalArgumentException {
 		if(array.length != 66) {
 			throw new IllegalArgumentException("input must be 66 bytes long");
