@@ -1,5 +1,7 @@
 package io.virgo.virgoCryptoLib;
 
+import java.nio.ByteBuffer;
+
 /* 
  * Bitcoin cryptography library
  * Copyright (c) Project Nayuki
@@ -126,6 +128,17 @@ public final class Sha256Hash implements Comparable<Sha256Hash> {
 		return 0;
 	}
 	
+	/**
+	 * @return the unsigned long representation of this hash
+	 */
+	public long toLong() {
+		byte[] paddedCopy = new byte[hash.length + 1];
+		for (int i = 0; i < hash.length; i++) {
+		    paddedCopy[i + 1] = hash[i];
+		}
+		
+		return ByteBuffer.wrap(paddedCopy).getLong();
+	}
 	
 	/**
 	 * Returns the hexadecimal string representation of this hash, in lowercase, 64 digits long.
