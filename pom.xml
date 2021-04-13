@@ -1,27 +1,19 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>net.BoltLabs</groupId>
-  <artifactId>BoltCryptoLib</artifactId>
+  <groupId>io.virgo</groupId>
+  <artifactId>VirgoCryptoLib</artifactId>
   <version>0.0.3</version>
-  <name>BoltCryptoLib</name>
+  <name>VirgoCryptoLib</name>
   <dependencies>
 	  <!-- https://mvnrepository.com/artifact/org.bouncycastle/bcprov-jdk15on -->
 	<dependency>
 	    <groupId>org.bouncycastle</groupId>
 	    <artifactId>bcprov-jdk15on</artifactId>
-	    <version>1.65</version>
+	    <version>1.68</version>
 	</dependency>
   </dependencies>
   <build>
     <sourceDirectory>src</sourceDirectory>
-    <resources>
-      <resource>
-        <directory>src</directory>
-        <excludes>
-          <exclude>**/*.java</exclude>
-        </excludes>
-      </resource>
-    </resources>
     <plugins>
       <plugin>
         <artifactId>maven-compiler-plugin</artifactId>
