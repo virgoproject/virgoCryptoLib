@@ -3,6 +3,7 @@ package io.virgo.virgoCryptoLib;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.math.BigInteger;
+import java.nio.ByteBuffer;
 import java.util.Arrays;
 import java.util.List;
 
@@ -112,6 +113,12 @@ public class Converter {
 	 */
 	public static BigInteger hexToDec(String s) throws NumberFormatException {
 		return new BigInteger(s, 16);
+	}
+	
+	public static byte[] longToBytes(long x) {
+	    ByteBuffer buffer = ByteBuffer.allocate(Long.BYTES);
+	    buffer.putLong(x);
+	    return buffer.array();
 	}
 	
 	private Converter() {} // Not instantiable
